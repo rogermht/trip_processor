@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="littlepay" default="all">
+  
+  
+  <property file="littlepay.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.klib"/>
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+    <include name="*.ear"/>
+    <include name="*.swc"/>
+    <include name="*.war"/>
+    <include name="*.zip"/>
+    <include name="*.ane"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/ext/access-bridge-64.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/jfxrt.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunmscapi.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxswt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.commons-beanutils-1.9.3.classpath">
+    <pathelement location="${basedir}/lib/commons-beanutils-1.9.3.jar"/>
+  </path>
+  
+  <path id="library.commons-collections4-4.3.classpath">
+    <pathelement location="${basedir}/lib/commons-collections4-4.3.jar"/>
+  </path>
+  
+  <path id="library.commons-lang3-3.9.classpath">
+    <pathelement location="${basedir}/lib/commons-lang3-3.9.jar"/>
+    <pathelement location="${basedir}/lib/commons-logging-1.2.jar"/>
+    <pathelement location="${basedir}/lib/commons-text-1.6.jar"/>
+    <pathelement location="${basedir}/lib/guava-23.0.jar"/>
+    <pathelement location="${basedir}/lib/opencsv-4.5.jar"/>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <fileset dir="${javac2.home}">
+      <include name="javac2.jar"/>
+      <include name="jdom.jar"/>
+      <include name="asm-all*.jar"/>
+      <include name="forms-*.jar"/>
+    </fileset>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module littlepay -->
+  
+  <dirname property="module.littlepay.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.littlepay" value="${jdk.home.1.8}"/>
+  <property name="module.jdk.bin.littlepay" value="${jdk.bin.1.8}"/>
+  <property name="module.jdk.classpath.littlepay" value="jdk.classpath.1.8"/>
+  
+  <property name="compiler.args.littlepay" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="littlepay.output.dir" value="${module.littlepay.basedir}/out/production/littlepay"/>
+  <property name="littlepay.testoutput.dir" value="${module.littlepay.basedir}/out/test/littlepay"/>
+  
+  <path id="littlepay.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="littlepay.module.production.classpath">
+    <path refid="${module.jdk.classpath.littlepay}"/>
+    <path refid="library.commons-beanutils-1.9.3.classpath"/>
+    <path refid="library.commons-collections4-4.3.classpath"/>
+    <path refid="library.commons-lang3-3.9.classpath"/>
+  </path>
+  
+  <path id="littlepay.runtime.production.module.classpath">
+    <pathelement location="${littlepay.output.dir}"/>
+    <path refid="library.commons-beanutils-1.9.3.classpath"/>
+    <path refid="library.commons-collections4-4.3.classpath"/>
+    <path refid="library.commons-lang3-3.9.classpath"/>
+  </path>
+  
+  <path id="littlepay.module.classpath">
+    <path refid="${module.jdk.classpath.littlepay}"/>
+    <pathelement location="${littlepay.output.dir}"/>
+    <path refid="library.commons-beanutils-1.9.3.classpath"/>
+    <path refid="library.commons-collections4-4.3.classpath"/>
+    <path refid="library.commons-lang3-3.9.classpath"/>
+    <pathelement location="${basedir}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${basedir}/lib/junit-4.12.jar"/>
+  </path>
+  
+  <path id="littlepay.runtime.module.classpath">
+    <pathelement location="${littlepay.testoutput.dir}"/>
+    <pathelement location="${littlepay.output.dir}"/>
+    <path refid="library.commons-beanutils-1.9.3.classpath"/>
+    <path refid="library.commons-collections4-4.3.classpath"/>
+    <path refid="library.commons-lang3-3.9.classpath"/>
+    <pathelement location="${basedir}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${basedir}/lib/junit-4.12.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.littlepay">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.littlepay">
+    <patternset refid="excluded.from.module.littlepay"/>
+  </patternset>
+  
+  <path id="littlepay.module.sourcepath">
+    <dirset dir="${module.littlepay.basedir}">
+      <include name="src/main"/>
+    </dirset>
+  </path>
+  
+  <path id="littlepay.module.test.sourcepath">
+    <dirset dir="${module.littlepay.basedir}">
+      <include name="src/test"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.littlepay" depends="compile.module.littlepay.production,compile.module.littlepay.tests" description="Compile module littlepay"/>
+  
+  <target name="compile.module.littlepay.production" depends="register.custom.compilers" description="Compile module littlepay; production classes">
+    <mkdir dir="${littlepay.output.dir}"/>
+    <javac2 destdir="${littlepay.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.littlepay}/javac">
+      <compilerarg line="${compiler.args.littlepay}"/>
+      <bootclasspath refid="littlepay.module.bootclasspath"/>
+      <classpath refid="littlepay.module.production.classpath"/>
+      <src refid="littlepay.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.littlepay"/>
+    </javac2>
+    
+    <copy todir="${littlepay.output.dir}">
+      <fileset dir="${module.littlepay.basedir}/src/main">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.littlepay.tests" depends="register.custom.compilers,compile.module.littlepay.production" description="compile module littlepay; test classes" unless="skip.tests">
+    <mkdir dir="${littlepay.testoutput.dir}"/>
+    <javac2 destdir="${littlepay.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.littlepay}/javac">
+      <compilerarg line="${compiler.args.littlepay}"/>
+      <bootclasspath refid="littlepay.module.bootclasspath"/>
+      <classpath refid="littlepay.module.classpath"/>
+      <src refid="littlepay.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.littlepay"/>
+    </javac2>
+    
+    <copy todir="${littlepay.testoutput.dir}">
+      <fileset dir="${module.littlepay.basedir}/src/test">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.littlepay" description="cleanup module">
+    <delete dir="${littlepay.output.dir}"/>
+    <delete dir="${littlepay.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.littlepay" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.littlepay" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.littlepay:jar" value="${basedir}/out/artifacts/littlepay_jar"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.littlepay.jar" value="${artifacts.temp.dir}/littlepay.jar"/>
+  </target>
+  
+  <target name="artifact.littlepay:jar" depends="init.artifacts, compile.module.littlepay" description="Build &#39;littlepay:jar&#39; artifact">
+    <property name="artifact.temp.output.littlepay:jar" value="${artifacts.temp.dir}/littlepay_jar"/>
+    <mkdir dir="${artifact.temp.output.littlepay:jar}"/>
+    <jar destfile="${temp.jar.path.littlepay.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${littlepay.output.dir}"/>
+      <zipfileset src="${basedir}/lib/commons-collections4-4.3.jar"/>
+      <zipfileset src="${basedir}/lib/commons-beanutils-1.9.3.jar"/>
+      <zipfileset src="${basedir}/lib/commons-lang3-3.9.jar"/>
+      <zipfileset src="${basedir}/lib/commons-logging-1.2.jar"/>
+      <zipfileset src="${basedir}/lib/commons-text-1.6.jar"/>
+      <zipfileset src="${basedir}/lib/guava-23.0.jar"/>
+      <zipfileset src="${basedir}/lib/opencsv-4.5.jar"/>
+    </jar>
+    <copy file="${temp.jar.path.littlepay.jar}" tofile="${artifact.temp.output.littlepay:jar}/littlepay.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.littlepay:jar" description="Build all artifacts">
+    <mkdir dir="${artifact.output.littlepay:jar}"/>
+    <copy todir="${artifact.output.littlepay:jar}">
+      <fileset dir="${artifact.temp.output.littlepay:jar}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
