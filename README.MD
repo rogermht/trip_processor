@@ -20,7 +20,7 @@ at various bus stop and produce a trips CSV file.
     - A Tap On without a Tap Off in the CSV file is considered Incomplete
     - A Tap On followed by another Tap On is considered Incomplete too
     - All data are well formatted
-   - Incomplete trip will have 0 duraction, empty ToStopId and Finished
+   - Incomplete trip will have 0 duration, empty ToStopId and Finished
     time 
     
 # Libraries used 
